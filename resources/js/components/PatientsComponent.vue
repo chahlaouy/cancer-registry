@@ -1,10 +1,10 @@
 <template>
     <div class="container">
-        <modal-component :form='form'></modal-component>
-        <!-- <button class="btn btn-success my-4 float-right" data-toggle="modal" data-target="#AddUser">
-            <i class="fa fa-user-plus"></i>
-            créer un enregistrement
-        </button> -->
+      
+        <modal-tumeur :id="id"></modal-tumeur>
+        <modal-hopital :id="id"></modal-hopital>
+        <modal-suivie :id="id"></modal-suivie>
+        
         <div class="clearfix">
         </div>
         <div class="row">
@@ -52,17 +52,17 @@
                       <td>{{patient.cin}}</td>
                       <td>{{patient.lieu_naisance}}</td>
                       <td>
-                          <button type="button" class="btn btn-success">
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#AddTumeur" @click="setPatienId(patient.id)">
                             <i class="fas fa-plus"></i>
                           </button>
                       </td>
                       <td>
-                          <button type="button" class="btn btn-success">
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#AddSuivie" @click="setPatienId(patient.id)">
                             <i class="fas fa-plus"></i>
                           </button>
                       </td>
                       <td>
-                          <button type="button" class="btn btn-success">
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#AddHopital" @click="setPatienId(patient.id)">
                             <i class="fas fa-plus"></i>
                           </button>
                       </td>
@@ -81,45 +81,50 @@
 </template>
 
 <script>
-import ModalComponent from './ModalComponent'
+import ModalHopital from './modals/ModalHopital'
+import ModalSuivie from './modals/ModalSuivie'
+import ModalTumeur from './modals/ModalTumeur'
+
     export default {
         name: 'UsersComponent',
         data(){
             return {
                 patients: [], 
-                form: new Form({
-                    nom: '',
-                    prenom: '',
-                    profession: '',
-                    sexe: '',
-                    age: '',
-                    adresse: '',
-                    cin: '',
-                    date_naissance: '',
-                    lieu_naisance: '',
-                    num_securite_sociale: '',
-                    hopital: '',
-                    num_laboratoire: '',
-                    num_cas: '',
-                    unite: '',
-                    nom_tumeur: '',
-                    diagnostic_de_base: '',
-                    topographie: '',
-                    morphologie: '',
-                    comportement_tumoral: '',
-                    differenciation_histologique: '',
-                    classification_TNM: '',
-                    extension: '',
-                    siege_metastase: '',
-                    date_incidence: '',
-                    date_derniere_contact: '',
-                    statut: '',
-                })
+                id: null
+                // form: new Form({
+                //     nom: '',
+                //     prenom: '',
+                //     profession: '',
+                //     sexe: '',
+                //     age: '',
+                //     adresse: '',
+                //     cin: '',
+                //     date_naissance: '',
+                //     lieu_naisance: '',
+                //     num_securite_sociale: '',
+                //     hopital: '',
+                //     num_laboratoire: '',
+                //     num_cas: '',
+                //     unite: '',
+                //     nom_tumeur: '',
+                //     diagnostic_de_base: '',
+                //     topographie: '',
+                //     morphologie: '',
+                //     comportement_tumoral: '',
+                //     differenciation_histologique: '',
+                //     classification_TNM: '',
+                //     extension: '',
+                //     siege_metastase: '',
+                //     date_incidence: '',
+                //     date_derniere_contact: '',
+                //     statut: '',
+                // })
             }
         },
         components: {
-            ModalComponent
-
+            ModalTumeur,
+            ModalSuivie,
+            ModalHopital
         },
         methods: {
             getPatients(){
@@ -127,7 +132,10 @@ import ModalComponent from './ModalComponent'
                     this.patients = data;
                     console.log(this.patients)
                 })
-            }
+            },
+            setPatienId(id){
+              this.id = id
+            } 
         },
         created(){
             this.getPatients();

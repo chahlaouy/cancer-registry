@@ -1,16 +1,16 @@
 <template>
     <div>
-        <div class="modal fade" id="AddUser" tabindex="-1" role="dialog" aria-labelledby="AddUserLabel" aria-hidden="true">
+        <div class="modal fade" id="modifyUser" tabindex="-1" role="dialog" aria-labelledby="modifyUserLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="AddUserLabel">Ajouter un Utilisateur</h5>
+                        <h5 class="modal-title" id="modifyUserLabel">Ajouter un Utilisateur</h5>
                         
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="addUser">
+                    <form @submit.prevent="updateUser">
                         <div class="modal-body">
 
                         <div class="form-group row">
@@ -50,6 +50,7 @@
                             <label for="role" class="col-md-4 col-form-label text-md-right" >Role</label>
                             <div class="col-md-6">
                                 <select name="role" id="role" v-model="form.role" class="form-control">
+                                    <option :value="form.role">{{form.role}}</option>
                                     <option value="role_user">Chercheur</option>
                                     <option value="role_admin">Administrateur</option>
                                 </select>
@@ -67,8 +68,7 @@
                             <div class="col-md-4">
 
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
-                                <!-- <button type="submit" class="btn btn-primary" @click="updateUser" v-else>Modifier  v-if="form.name == ''"</button> -->
+                                <button type="submit" class="btn btn-primary">Modifier</button>
                             </div>
 
                         </div>
@@ -82,30 +82,13 @@
 <script>
 export default {
     name: 'ModalUser',
-    
+    props: ['form'],
     data(){
         return {
-            success: null,
-            form: {
-                id: '',
-                name: '',
-                email: '',
-                password: '',
-                role: ''
-            }
+            success: null
         }
     },
     methods: {
-        addUser(){
-            axios.post('api/user', this.form)
-                .then((rep) => {
-                    this.success = "Utilisatuer a ete ajouter avec succes"
-                    this.$emit('event-add-user')
-
-                }).catch((e) => {
-                    this.success = "loperation a ete echouee s il vous plait essayer une autre fois"
-                })
-        },
         updateUser(){
             this.form.patch('api/user/' + this.form.id)
                 .then(({ data }) => {

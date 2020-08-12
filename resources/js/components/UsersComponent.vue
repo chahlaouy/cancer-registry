@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <modal-user :form='form' v-on:event-add-user="refreshUsers"></modal-user>
+        <modal-user v-on:event-add-user="refreshUsers"></modal-user>
+        <modal-modify-user :form='newForm' v-on:event-add-user="refreshUsers"></modal-modify-user>
         <button class="btn btn-success my-4 float-right" data-toggle="modal" data-target="#AddUser">
             <i class="fa fa-user-plus"></i>
             créer un Utilisateur
@@ -43,7 +44,7 @@
                       <td>{{user.email}}</td>
                       <td>{{user.role}}</td>
                       <td>
-                          <button type="button" class="btn btn-warning" @click="bindUser(user)" data-toggle="modal" data-target="#AddUser">
+                          <button type="button" class="btn btn-warning" @click="bindUser(user)" data-toggle="modal" data-target="#modifyUser">
                             <i class="fas fa-edit"></i>
                           </button>
                       </td>
@@ -69,12 +70,13 @@
 
 <script>
 import ModalUser from './ModalUser'
+import ModalModifyUser from './modals/ModalModifyUser'
     export default {
         name: 'UsersComponent',
         data(){
             return {
                 users: [], 
-                form: {
+                newForm: {
                     id: '',
                     name: '',
                     email: '',
@@ -84,7 +86,8 @@ import ModalUser from './ModalUser'
             }
         },
         components: {
-            ModalUser
+            ModalUser,
+            ModalModifyUser
 
         },
         methods: {
@@ -99,9 +102,10 @@ import ModalUser from './ModalUser'
               })
             },
             bindUser(user) {
-              this.form.name = user.name
-              this.form.email = user.email
-              this.form.id = user.id
+              this.newForm.name = user.name
+              this.newForm.email = user.email
+              this.newForm.id = user.id
+              this.newForm.role = user.role
               
             },
             refreshUsers(){

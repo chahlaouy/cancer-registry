@@ -25,4 +25,7 @@ Route::group(['prefix' => '', 'namespace' => 'Api'], function(){
         'patient' => 'PatientController',
         'user'    => 'UserController'
     ]);
+    Route::post('tumeur/{id}', 'TumeurController@store');
+    Route::post('hopital/{id}', 'HopitalController@store');
+    Route::post('suivie/{id}', 'SuivieController@store');
 });
