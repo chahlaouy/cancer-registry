@@ -6,7 +6,7 @@
                 <div class="card-header">Connexion</div>
 
                 <div class="card-body">
-                    <form @submit.prevent="logIn">
+                    <form @submit.prevent="submit">
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">Email addresse</label>
@@ -44,35 +44,30 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
     name: 'SingIn',
     data(){
         return {
-            form: new Form({
+            form: {
                 email: '',
                 password: ''
-            })
+            }
         }
     },
     methods: {
-        logIn(){
-            this.form.post('api/auth/connexion')
-                .then(({ data }) => {
-                    console.log(data)
-
-                }).catch(({ data }) => {
-                    console.log(data)
-                })
-        },
-        updateUser(){
-            this.form.patch('api/user/' + this.form.id)
-                .then(({ data }) => {
-                    console.log(data)
-                    this.$emit('event-add-user')
-
-                }).catch(({ data }) => {
-                    console.log(data)
-                })
+        ...mapActions({
+            logIn: 'auth/logIn'
+        }),
+        submit(){
+           this.logIn(this.form).then(() => {
+            //    this.$router.replace({
+            //        name: 'home'
+            //    })
+               this.$router.push({
+                   name: 'home'
+               })
+           })
         }
     },
    

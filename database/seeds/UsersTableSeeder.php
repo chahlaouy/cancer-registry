@@ -16,13 +16,13 @@ class UsersTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@me.com',
             'password' => Hash::make('admin'),
-            'role' => 2
+            'role' => 'role_user'
         ]);
         User::create([
             'name' => 'User',
             'email' => 'user@me.com',
             'password' => Hash::make('user'),
-            'role' => 1
+            'role' => 'role_admin'
         ]);
     }
 }

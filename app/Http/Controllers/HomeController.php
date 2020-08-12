@@ -21,8 +21,4 @@ class HomeController extends Controller
     {
         return view('home');
     }
-    public function logIn()
-    {
-        return view('layouts.login');
-    }
 }

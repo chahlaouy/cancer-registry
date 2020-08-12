@@ -18,10 +18,17 @@ import router from './router/index.js';
 import Axios from 'axios';
 import store from './store/index'
 
+require('./store/subscriber.js')
+
 Vue.config.productionTip = false
 
+store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
+    const app = new Vue({
+        el: '#app',
+        router,
+        store
+    });
+})
 
-const app = new Vue({
-    el: '#app',
-    router
-});
+
+

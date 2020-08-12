@@ -15,8 +15,9 @@
 Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function(){
 
     Route::post('connexion', 'SinginController@index');
-    Route::post('deconnexion','SignOutController@index')->name('logout');
+    Route::post('deconnexion','SingoutController@index');
     Route::get('main', 'MainController@index');
+    Route::post('register', 'UserController@registerUser');
 });
 
 Route::group(['prefix' => '', 'namespace' => 'Api'], function(){

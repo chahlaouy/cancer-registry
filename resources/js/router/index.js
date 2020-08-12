@@ -8,6 +8,7 @@ import PatientsComponent from '../components/PatientsComponent.vue'
 import PatientsListComponent from '../components/PatientsListComponent.vue'
 import SignIn from '../components/SignIn.vue'
 import MainLayout from '../components/MainLayout.vue'
+import store from '../store/index'
 
 Vue.use(VueRouter)
 
@@ -19,6 +20,7 @@ let routes = [
   },
   {
     path: "/",
+    name:'home',
     component: MainLayout,
     redirect: "/dashboard",
     children: [ 
@@ -49,7 +51,15 @@ let routes = [
           component: UsersComponent
         },
       
-      ]
+      ],
+      beforeEnter: (to, from, next) => {
+        if (!store.getters['auth/isAuthenticated']){
+          next({
+            name: 'connexion'
+          })
+        }
+        next()
+      },
     }
 ]
 
