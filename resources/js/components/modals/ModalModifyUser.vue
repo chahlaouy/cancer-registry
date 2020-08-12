@@ -50,9 +50,16 @@
                             <label for="role" class="col-md-4 col-form-label text-md-right" >Role</label>
                             <div class="col-md-6">
                                 <select name="role" id="role" v-model="form.role" class="form-control">
-                                    <option :value="form.role">{{form.role}}</option>
-                                    <option value="role_user">Chercheur</option>
-                                    <option value="role_admin">Administrateur</option>
+                                    <template v-if="form.role == 'role_user'">
+                                        <option  :value="form.role">Chercheur</option>
+                                        <option value="role_admin">Administrateur</option>
+                                    </template>
+                                    <template v-else>
+                                        <option :value="form.role">Administrateur</option>
+                                        <option  value="role_user">Chercheur</option>
+                                    </template>
+                                    
+                                    
                                 </select>
 
                             </div>

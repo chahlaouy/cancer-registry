@@ -8,6 +8,7 @@ import PatientsComponent from '../components/PatientsComponent.vue'
 import PatientsListComponent from '../components/PatientsListComponent.vue'
 import SignIn from '../components/SignIn.vue'
 import MainLayout from '../components/MainLayout.vue'
+import Home from '../components/chercheur/Home'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -17,6 +18,11 @@ let routes = [
     path: '/connexion',
     name: 'connexion',
     component: SignIn
+  },
+  {
+    path: '/interface-chercheur',
+    name: 'interface-chercheur',
+    component: Home
   },
   {
     path: "/",
@@ -54,6 +60,7 @@ let routes = [
       ],
       beforeEnter: (to, from, next) => {
         if (!store.getters['auth/isAuthenticated']){
+          console.log(store.getters['auth/user'])
           next({
             name: 'connexion'
           })
