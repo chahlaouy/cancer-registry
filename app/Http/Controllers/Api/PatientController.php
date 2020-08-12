@@ -18,7 +18,8 @@ class PatientController extends Controller
      */
     public function index()
     {
-        return Patient::all();
+        $patients = Patient::with(['tumeurs', 'hopitals', 'suivres'])->get();
+        return $patients;
     }
 
     /**
