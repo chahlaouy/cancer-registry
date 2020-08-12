@@ -2404,17 +2404,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ModalComponent',
   props: ['form'],
+  data: function data() {
+    return {
+      success: null
+    };
+  },
   methods: {
     addPatient: function addPatient() {
+      var _this = this;
+
       this.form.post('api/patient').then(function (_ref) {
         var data = _ref.data;
-        console.log(data);
+        _this.success = "Patient a ete ajouter avec succes";
+
+        _this.$emit('event-add-patient');
       })["catch"](function (_ref2) {
         var data = _ref2.data;
-        console.log(data);
+        _this.success = "loperation a ete echouee s il vous plait essayer une autre fois";
       });
     }
   },
@@ -2494,33 +2508,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ModalComponent',
   props: ['form'],
+  data: function data() {
+    return {
+      success: null
+    };
+  },
   methods: {
     addUser: function addUser() {
       var _this = this;
 
-      this.form.post('api/user').then(function (_ref) {
-        var data = _ref.data;
-        console.log(data);
+      axios.post('api/user', this.form).then(function (rep) {
+        _this.success = "Utilisatuer a ete ajouter avec succes";
 
         _this.$emit('event-add-user');
-      })["catch"](function (_ref2) {
-        var data = _ref2.data;
-        console.log(data);
+      })["catch"](function (e) {
+        _this.success = "loperation a ete echouee s il vous plait essayer une autre fois";
       });
     },
     updateUser: function updateUser() {
       var _this2 = this;
 
-      this.form.patch('api/user/' + this.form.id).then(function (_ref3) {
-        var data = _ref3.data;
+      this.form.patch('api/user/' + this.form.id).then(function (_ref) {
+        var data = _ref.data;
         console.log(data);
 
         _this2.$emit('event-add-user');
-      })["catch"](function (_ref4) {
-        var data = _ref4.data;
+      })["catch"](function (_ref2) {
+        var data = _ref2.data;
         console.log(data);
       });
     }
@@ -2813,6 +2849,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.patients = data;
         console.log(_this.patients);
       });
+    },
+    refreshPatients: function refreshPatients() {
+      this.getPatients();
     }
   },
   created: function created() {
@@ -3024,18 +3063,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UsersComponent',
   data: function data() {
     return {
       users: [],
-      form: new Form({
+      form: {
         id: '',
         name: '',
         email: '',
-        password: ''
-      })
+        password: '',
+        role: ''
+      }
     };
   },
   components: {
@@ -42190,7 +42232,26 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _c("div", { staticClass: "modal-footer row" }, [
+                    _vm.success
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "alert alert-success col-md-6",
+                            attrs: { role: "alert" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.success) +
+                                "\n                        "
+                            )
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ])
                 ]
               )
             ])
@@ -42228,7 +42289,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
+    return _c("div", { staticClass: "col-md-4" }, [
       _c(
         "button",
         {
@@ -42427,38 +42488,85 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-md-4 col-form-label text-md-right",
+                          attrs: { for: "role" }
+                        },
+                        [_vm._v("Role")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "role", id: "role" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "role",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "role_user" } }, [
+                              _vm._v("Chercheur")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "role_admin" } }, [
+                              _vm._v("Administrateur")
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button", "data-dismiss": "modal" }
-                      },
-                      [_vm._v("Close")]
-                    ),
-                    _vm._v(" "),
-                    _vm.form === null
+                  _c("div", { staticClass: "modal-footer row" }, [
+                    _vm.success
                       ? _c(
-                          "button",
+                          "div",
                           {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "submit" },
-                            on: { click: _vm.addUser }
+                            staticClass: "alert alert-success col-md-6",
+                            attrs: { role: "alert" }
                           },
-                          [_vm._v("Ajouter")]
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.success) +
+                                "\n                        "
+                            )
+                          ]
                         )
-                      : _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "submit" },
-                            on: { click: _vm.updateUser }
-                          },
-                          [_vm._v("Modifier")]
-                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._m(2)
                   ])
                 ]
               )
@@ -42502,10 +42610,7 @@ var staticRenderFns = [
         "label",
         {
           staticClass: "col-md-4 col-form-label text-md-right",
-          attrs: {
-            for: "password-confirm",
-            placeholder: "Confirmer mot de passe"
-          }
+          attrs: { for: "password-confirm" }
         },
         [_vm._v("Confirmer Votre mot de passe")]
       ),
@@ -42522,6 +42627,27 @@ var staticRenderFns = [
           }
         })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Ajouter")]
+      )
     ])
   }
 ]
@@ -42737,7 +42863,10 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("modal-component", { attrs: { form: _vm.form } }),
+      _c("modal-component", {
+        attrs: { form: _vm.form },
+        on: { "event-add-patient": _vm.refreshPatients }
+      }),
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
@@ -43152,6 +43281,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(user.email))]),
                         _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.role))]),
+                        _vm._v(" "),
                         _c("td", [
                           _c(
                             "button",
@@ -43265,6 +43396,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nom")]),
         _vm._v(" "),
         _c("th", [_vm._v("email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("role")]),
         _vm._v(" "),
         _c("th", [_vm._v("Modifier")]),
         _vm._v(" "),

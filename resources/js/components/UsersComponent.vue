@@ -31,6 +31,7 @@
                       <th>ID</th>
                       <th>Nom</th>
                       <th>email</th>
+                      <th>role</th>
                       <th>Modifier</th>
                       <th>Supprimer</th>
                     </tr>
@@ -40,6 +41,7 @@
                       <td>{{user.id}}</td>
                       <td>{{user.name}}</td>
                       <td>{{user.email}}</td>
+                      <td>{{user.role}}</td>
                       <td>
                           <button type="button" class="btn btn-warning" @click="bindUser(user)" data-toggle="modal" data-target="#AddUser">
                             <i class="fas fa-edit"></i>
@@ -72,12 +74,13 @@ import ModalUser from './ModalUser'
         data(){
             return {
                 users: [], 
-                form: new Form({
+                form: {
                     id: '',
                     name: '',
                     email: '',
                     password: '',
-                })
+                    role: ''
+                }
             }
         },
         components: {

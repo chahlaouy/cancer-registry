@@ -5,6 +5,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="AddUserLabel">Ajouter un Utilisateur</h5>
+                        
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -39,18 +40,36 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right" placeholder="Confirmer mot de passe" >Confirmer Votre mot de passe</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirmer Votre mot de passe</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right" >Role</label>
+                            <div class="col-md-6">
+                                <select name="role" id="role" v-model="form.role" class="form-control">
+                                    <option value="role_user">Chercheur</option>
+                                    <option value="role_admin">Administrateur</option>
+                                </select>
+
+                            </div>
+
+                            
+                        </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" @click="addUser" v-if="form === null">Ajouter</button>
-                            <button type="submit" class="btn btn-primary" @click="updateUser" v-else>Modifier</button>
+                        <div class="modal-footer row">
+                            <div class="alert alert-success col-md-6" role="alert" v-if="success">
+                                {{success}}
+                            </div>
+                            <div class="col-md-4">
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                                <!-- <button type="submit" class="btn btn-primary" @click="updateUser" v-else>Modifier  v-if="form.name == ''"</button> -->
+                            </div>
 
                         </div>
                     </form>
@@ -64,15 +83,20 @@
 export default {
     name: 'ModalComponent',
     props: ['form'],
+    data(){
+        return {
+            success: null
+        }
+    },
     methods: {
         addUser(){
-            this.form.post('api/user')
-                .then(({ data }) => {
-                    console.log(data)
+            axios.post('api/user', this.form)
+                .then((rep) => {
+                    this.success = "Utilisatuer a ete ajouter avec succes"
                     this.$emit('event-add-user')
 
-                }).catch(({ data }) => {
-                    console.log(data)
+                }).catch((e) => {
+                    this.success = "loperation a ete echouee s il vous plait essayer une autre fois"
                 })
         },
         updateUser(){

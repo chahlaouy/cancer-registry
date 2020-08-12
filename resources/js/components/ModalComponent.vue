@@ -241,9 +241,14 @@
                             </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <div class="modal-footer row">
+                            <div class="alert alert-success col-md-6" role="alert" v-if="success">
+                                {{success}}
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Ajouter</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -256,13 +261,19 @@
 export default {
     name: 'ModalComponent',
     props: ['form'],
+    data(){
+        return {
+            success: null
+        }
+    },
     methods: {
         addPatient(){
             this.form.post('api/patient')
                 .then(({ data }) => {
-                    console.log(data)
+                    this.success = "Patient a ete ajouter avec succes"
+                    this.$emit('event-add-patient')
                 }).catch(({ data }) => {
-                    console.log(data)
+                     this.success = "loperation a ete echouee s il vous plait essayer une autre fois"
                 })
         }
     },

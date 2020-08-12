@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <modal-component :form='form'></modal-component>
+        <modal-component :form='form'  v-on:event-add-patient="refreshPatients"></modal-component>
         <button class="btn btn-success my-4 float-right" data-toggle="modal" data-target="#AddUser">
             <i class="fa fa-user-plus"></i>
             créer un enregistrement
@@ -122,8 +122,12 @@ import ModalComponent from './ModalComponent'
                     this.patients = data;
                     console.log(this.patients)
                 })
+            },
+            refreshPatients(){
+              this.getPatients();
             }
         },
+
         created(){
             this.getPatients();
         }
