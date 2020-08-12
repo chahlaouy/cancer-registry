@@ -59,11 +59,17 @@ let routes = [
       
       ],
       beforeEnter: (to, from, next) => {
+       
         if (!store.getters['auth/isAuthenticated']){
-          console.log(store.getters['auth/user'])
+          if (store.getters['auth/user'].role == 'role_user'){
+            next({
+              name: 'interface-chercheur'
+            })
+          }else {
           next({
             name: 'connexion'
           })
+        }
         }
         next()
       },

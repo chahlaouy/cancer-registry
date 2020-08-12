@@ -63664,10 +63664,15 @@ var routes = [{
   }],
   beforeEnter: function beforeEnter(to, from, next) {
     if (!_store_index__WEBPACK_IMPORTED_MODULE_10__["default"].getters['auth/isAuthenticated']) {
-      console.log(_store_index__WEBPACK_IMPORTED_MODULE_10__["default"].getters['auth/user']);
-      next({
-        name: 'connexion'
-      });
+      if (_store_index__WEBPACK_IMPORTED_MODULE_10__["default"].getters['auth/user'].role == 'role_user') {
+        next({
+          name: 'interface-chercheur'
+        });
+      } else {
+        next({
+          name: 'connexion'
+        });
+      }
     }
 
     next();
