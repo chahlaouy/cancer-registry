@@ -3317,6 +3317,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3329,6 +3330,7 @@ __webpack_require__.r(__webpack_exports__);
       dataCollectionPercentage: null,
       dataCollectionAge: null,
       dataCollectionGender: null,
+      interval: null,
       loaded: false,
       timeLine: [2000, 2010, 3, 4, 5, 6, 7, 8],
       dataAgeAdult: [5, 3, 5, 4, 5, 6, 7, 8],
@@ -3343,6 +3345,9 @@ __webpack_require__.r(__webpack_exports__);
     getFullData: function getFullData() {
       console.log(this.beginDate);
       console.log(this.endDate);
+      axios.get("api/get-percentage/" + this.beginDate + "/" + this.endDate).then(function (response) {
+        console.log(response);
+      });
     },
     fillData: function fillData() {
       this.dataCollectionPercentage = {

@@ -28,4 +28,5 @@ Route::group(['prefix' => '', 'namespace' => 'Api'], function(){
     Route::post('tumeur/{id}', 'TumeurController@store');
     Route::post('hopital/{id}', 'HopitalController@store');
     Route::post('suivie/{id}', 'SuivieController@store');
+    Route::get('get-percentage/{beginDate}/{endDate}', 'SearcherController@index');
 });

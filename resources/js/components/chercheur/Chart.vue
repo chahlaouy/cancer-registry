@@ -53,10 +53,11 @@
 
 
             <!-- line Chart -->
-            <div class="row">
+            <div class="row" >
                 <div class="col s4">
                     <line-chart
                         :chartData="dataCollectionPercentage"
+                        
                     ></line-chart>
 
                 </div>
@@ -92,6 +93,7 @@ export default {
             dataCollectionPercentage: null,
             dataCollectionAge: null,
             dataCollectionGender: null,
+            interval: null,
             loaded: false,
             timeLine: [2000,2010,3,4,5,6,7,8],
             dataAgeAdult: [5,3,5,4,5,6,7,8],
@@ -107,6 +109,9 @@ export default {
            
             console.log(this.beginDate);
             console.log(this.endDate);
+            axios.get("api/get-percentage/" + this.beginDate + "/" + this.endDate).then( response => {
+                console.log(response)
+            })
         },
         fillData(){
             this.dataCollectionPercentage = {
