@@ -17,8 +17,8 @@
                                     
                                     <div class="form-group">
                                         <label>Nom</label>
-                                        <input v-model="form.nom" type="text" name="nom"
-                                            class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('nom') }">
+                                        <textarea v-model="form.nom" type="text" name="nom" cols="50" rows="30"
+                                            class="form-control form-control-sm" :class="{ 'is-invalid': form.errors.has('nom') }"> </textarea>
                                         <has-error :form="form" field="nom"></has-error>
                                     </div>
 

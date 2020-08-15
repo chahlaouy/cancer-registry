@@ -1,57 +1,20 @@
 <template>
     <div>
-        <ModalComponent :patient="patient"></ModalComponent>
+        
+        <nav-bar></nav-bar>
         <Header />
-        <div class="card text-center">
-            <div class="card-header">
-                Patient Detailles
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Prénom</th>
-                            <th scope="col">Sexe</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Addresse</th>
-                            <th scope="col">CIN</th>
-                            <th scope="col">Lieu Naisance</th>
-                            <th scope="col">Afficher Plus D'infromation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="patient in patients" :key="patient.id" >
-                            <th scope="row">{{patient.id}}</th>
-                            <td>{{patient.nom}}</td>
-                            <td>{{patient.prenom}}</td>
-                            <td>{{patient.sexe}}</td>
-                            <td>{{patient.age}}</td>
-                            <td>{{patient.adresse}}</td>
-                            <td>{{patient.cin}}</td>
-                            <td>{{patient.lieu_naisance}}</td>
-                            <td>
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#showPatient" @click="bindPatient(patient)">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
-            </div>
-            <div class="card-footer text-muted">
-                liste des patients
-            </div>
-            </div>
+        <router-view></router-view>
         </div>
 </template>
 
 <script>
+// import 'materialize-css/dist/css/materialize.min.css'
+// import 'material-design-icons/iconfont/material-icons.css'
+import Chart from './Chart'
+// import M from 'materialize-css'
 import Header from './Header'
 import ModalComponent from './ModalComponent'
+import NavBar from './NavBar'
 export default {
     name: 'Home',
     data(){
@@ -62,7 +25,9 @@ export default {
     },
     components: {
         Header,
-        ModalComponent
+        ModalComponent,
+        Chart,
+        NavBar
     },
     methods: {
          getPatients(){
@@ -77,6 +42,7 @@ export default {
         },
         created(){
             this.getPatients();
+            //  M.AutoInit()
     }
 
 }

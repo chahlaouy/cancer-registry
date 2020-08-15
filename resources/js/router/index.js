@@ -9,6 +9,8 @@ import PatientsListComponent from '../components/PatientsListComponent.vue'
 import SignIn from '../components/SignIn.vue'
 import MainLayout from '../components/MainLayout.vue'
 import Home from '../components/chercheur/Home'
+import Acceuil from '../components/chercheur/Acceuil'
+import Chart from '../components/chercheur/Chart'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -22,7 +24,26 @@ let routes = [
   {
     path: '/interface-chercheur',
     name: 'interface-chercheur',
-    component: Home
+    component: Home,
+    redirect: '/acceuil',
+    children: [
+        {
+          path: '/acceuil',
+          name: 'acceuil',
+          component: Acceuil
+        },
+        
+        {
+          path: '/statistiques',
+          name: 'statistiques',
+          component: Chart
+        },
+        // {
+        //   path: '/patients',
+        //   name: 'patients',
+        //   component: PatientsComponent
+        // },
+    ]
   },
   {
     path: "/",

@@ -120,6 +120,7 @@
 
 
 <script>
+// import M from 'materialize-css'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -145,6 +146,9 @@ export default {
 			  })
 		  })
 	  }
+  },
+  mounted(){
+	//   M.AutoInit()
   }
 
 }

@@ -15,8 +15,9 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 import router from './router/index.js';
-import Axios from 'axios';
 import store from './store/index'
+
+
 
 require('./store/subscriber.js')
 
