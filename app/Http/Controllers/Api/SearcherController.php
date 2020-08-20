@@ -11,9 +11,8 @@ class SearcherController extends Controller
     public function index($beginDate, $endDate){
 
         $patients = Patient::all();
-
+        
         $count = count($patients);
-
         return $count;
     }
 }
